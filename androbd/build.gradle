@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 30
+    defaultConfig {
+        applicationId 'com.fr3ts0n.ecu.gui.androbd'
+        minSdkVersion 17
+        // SDK 25 to allow background service mechanism for plugins
+        targetSdkVersion 25
+        versionCode 20502
+        versionName 'V2.5.2'
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        lintOptions {
+            // Override lint error on targetSdkVersion
+            abortOnError false
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.resValue "string", "app_version", variant.versionName
+    }
+
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    lintOptions {
+        abortOnError false
+    }
+
+    productFlavors {
+    }
+}
+
+dependencies {
+    implementation project(':plugin')
+    implementation project(':library')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.github.mik3y:usb-serial-for-android:3.3.0'
+    implementation 'com.github.anastr:speedviewlib:1.6.0'
+}
